@@ -62,6 +62,11 @@ func Login(c *gin.Context) {
 
 func Register(c *gin.Context) {
 
+	if !core.GlobalConfig.Server.Register {
+		c.JSON(http.StatusOK, core.ForbiddenError(RegisterDisabledCode, RegisterDisabledMessage))
+		return
+	}
+
 	// 获取参数
 	var req UserRegisterLoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

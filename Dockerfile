@@ -1,3 +1,4 @@
+# docker build --network=host -t alioth:nightly .
 FROM golang:1.22 as builder
 WORKDIR /app
 ADD . ./

@@ -5,6 +5,7 @@ services:
     container_name: alioth
     volumes:
       - "./config.yaml:/app/config/config.yaml"
+      - "./alioth.log:/app/alioth.log"
     environment:
       - TZ=Asia/Shanghai
     restart: always

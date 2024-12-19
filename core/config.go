@@ -10,10 +10,15 @@ import (
 var GlobalConfig YamlConfig
 
 type YamlConfig struct {
-	Http  YamlHttp  `yaml:"http"`
-	Mysql YamlMysql `yaml:"mysql"`
-	Zap   YamlZap   `yaml:"zap"`
-	JWT   YamlJWT   `yaml:"jwt"`
+	Server YamlServer `yaml:"server"`
+	Http   YamlHttp   `yaml:"http"`
+	Mysql  YamlMysql  `yaml:"mysql"`
+	Zap    YamlZap    `yaml:"zap"`
+	JWT    YamlJWT    `yaml:"jwt"`
+}
+
+type YamlServer struct {
+	Register bool `yaml:"register"` // 是否开启注册服务
 }
 
 type YamlHttp struct {
