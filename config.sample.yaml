@@ -1,0 +1,24 @@
+zap:
+  level: debug
+  file: system.log
+  maxSize: 10
+  maxAge: 7
+http:
+  listen: ":8080"
+  listenTLS:
+  certFile:
+  keyFile:
+jwt:
+  secret: 123456
+  expire: 720
+  issuer: anonymous
+  audience:
+    - anonymous
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: 123456
+  database: anonymous
+  maxOpenConnections: 100
+  maxIdleConnections: 10
