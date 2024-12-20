@@ -9,10 +9,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Login
-        run: |
-          docker version
-          docker login --username=${{ secrets.ALIYUN_USERNAME }} --password=${{ secrets.ALIYUN_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://registry.cn-hangzhou.aliyuncs.com
+          username: "${{ secrets.ALIYUN_USERNAME }}"
+          password: "${{ secrets.ALIYUN_PASSWORD }}"
       - name: Build and Push
         run: |
-          docker build -t registry.cn-hangzhou.aliyuncs.com/ns_zyzy/alioth:$IMAGE_TAG .
-          docker push registry.cn-hangzhou.aliyuncs.com/ns_zyzy/alioth:$IMAGE_TAG
+          docker build -t registry.cn-hangzhou.aliyuncs.com/zyzy_alioth/alioth:$IMAGE_TAG .
+          docker push registry.cn-hangzhou.aliyuncs.com/zyzy_alioth/alioth:$IMAGE_TAG
