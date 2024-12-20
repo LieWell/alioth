@@ -24,7 +24,8 @@ go.work.sum
 # env file
 .env
 
-## 
+##
 *.log
 .vscode/
+ssl/
 config.yaml

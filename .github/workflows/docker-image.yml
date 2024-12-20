@@ -1,11 +1,22 @@
-name: build image
+name: build and push to aliyun
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Login
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://registry.cn-hangzhou.aliyuncs.com
+          username: "${{ secrets.ALIYUN_USERNAME }}"
+          password: "${{ secrets.ALIYUN_PASSWORD }}"
+      - name: Build and Push
+        env:
+          IMAGE_TAG: nightly
+        run: |
+          docker build -t registry.cn-hangzhou.aliyuncs.com/ns_zyzy/alioth:$IMAGE_TAG .
+          docker push registry.cn-hangzhou.aliyuncs.com/ns_zyzy/alioth:$IMAGE_TAG
