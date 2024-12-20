@@ -15,6 +15,8 @@ jobs:
           username: "${{ secrets.ALIYUN_USERNAME }}"
           password: "${{ secrets.ALIYUN_PASSWORD }}"
       - name: Build and Push
+        env:
+          IMAGE_TAG: nightly
         run: |
           docker build -t registry.cn-hangzhou.aliyuncs.com/zyzy_alioth/alioth:$IMAGE_TAG .
           docker push registry.cn-hangzhou.aliyuncs.com/zyzy_alioth/alioth:$IMAGE_TAG
