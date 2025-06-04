@@ -31,13 +31,13 @@ func JWT() gin.HandlerFunc {
 		validator.WithAllowedClockSkew(5*time.Second), // 时钟偏差
 	)
 	if err != nil {
-		core.Logger.Panic("[JWT] set up validator failed: %v", err)
+		core.Logger.Panic("[JWT] set up validator failed: ", err)
 	}
 	middleware := jwtmiddleware.New(
 		jwtValidator.ValidateToken,
 		jwtmiddleware.WithErrorHandler(func(w http.ResponseWriter, r *http.Request, err error) {
 			// 自定义错误仅记录原因,不将错误返回给调用方
-			core.Logger.Info("[JWT] validate error: %v", err)
+			core.Logger.Info("[JWT] validate error: ", err)
 		}))
 
 	return func(ctx *gin.Context) {
