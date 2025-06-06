@@ -3,6 +3,7 @@ package rplace
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -93,6 +94,65 @@ func initPixels() [][]int {
 			pixels[i][j] = colorWhite
 		}
 	}
+
+	// 获取当前日期（月/日）
+	now := time.Now()
+	month := int(now.Month())
+	day := now.Day()
+
+	// 将日期格式化为两位数（例如：6月 -> "06", 15日 -> "15"）
+	dateStr := fmt.Sprintf("%02d%02d", month, day)
+
+	// 5x7 点阵数字定义（7行5列）
+	digits := map[rune][7]int{
+		'0': {14, 17, 17, 17, 17, 17, 14},
+		'1': {4, 12, 4, 4, 4, 4, 14},
+		'2': {14, 17, 1, 2, 4, 8, 31},
+		'3': {14, 17, 1, 6, 1, 17, 14},
+		'4': {17, 17, 17, 31, 1, 1, 1},
+		'5': {31, 16, 30, 1, 1, 17, 14},
+		'6': {14, 17, 16, 30, 17, 17, 14},
+		'7': {31, 1, 2, 4, 4, 4, 4},
+		'8': {14, 17, 17, 14, 17, 17, 14},
+		'9': {14, 17, 17, 15, 1, 17, 14},
+	}
+
+	// 计算起始位置（居中显示）
+	startRow := (16 - 7) / 2         // 垂直居中
+	startCol := (32 - (5*4 + 3)) / 2 // 水平居中（4个数字，每个5列，3个间距）
+
+	// 在像素阵列中绘制日期数字
+	for i, char := range dateStr {
+		digitPattern, exists := digits[char]
+		if !exists {
+			continue
+		}
+
+		// 每个数字起始位置（考虑间距）
+		numStartCol := startCol + i*(5+1)
+
+		// 绘制数字（7行）
+		for row := 0; row < 7; row++ {
+			// 确保行位置有效
+			pixelRow := startRow + row
+			if pixelRow >= 16 {
+				continue
+			}
+
+			// 绘制一行（5列）
+			pattern := digitPattern[row]
+			for col := 0; col < 5; col++ {
+				// 检查点阵中的位（从最高位开始）
+				if pattern&(1<<(4-col)) != 0 {
+					pixelCol := numStartCol + col
+					if pixelCol < 32 {
+						pixels[pixelRow][pixelCol] = 0
+					}
+				}
+			}
+		}
+	}
+
 	return pixels
 }
 
