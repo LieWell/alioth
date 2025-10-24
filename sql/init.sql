@@ -14,3 +14,12 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+# rplace 表
+DROP TABLE IF EXISTS `rplace`;
+CREATE TABLE `rplace` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '数据',
+  `date` date NOT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
