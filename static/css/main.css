@@ -1,0 +1,39 @@
+html, body {
+  color: #151D29;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.canvas-panel {
+  margin-top: 20px;
+  width: auto;
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: repeat(32, 20px);
+}
+
+.pixel {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.5s ease;
+}
+
+.link-wrapper {
+  margin-top: 20px;
+}
+
+.about-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-size: 12px;
+  border-top: 1px solid #DDD;
+}
+
+.footer-text a,
+.footer-text span {
+  color: #999;
+}

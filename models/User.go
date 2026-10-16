@@ -23,7 +23,7 @@ type User struct {
 	Email     string    `gorm:"type:varchar(255);not null"`
 	Password  string    `gorm:"type:varchar(128);not null"`
 	Salt      string    `gorm:"type:varchar(32);not null"`
-	Status    int       `gorm:"type:tinyint(1);default:0;not null"` // 0:启用, 1:禁用, 2:删除
+	Status    int       `gorm:"type:integer;default:0;not null"` // 0:启用, 1:禁用, 2:删除
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
@@ -34,13 +34,13 @@ func (u *User) TableName() string {
 
 func FindUserByUsername(username string) (*User, error) {
 	var u User
-	if err := core.MYSQL.Where("user_name = ?", username).First(&u).Error; err != nil {
+	if err := core.SQLite.Where("user_name = ?", username).First(&u).Error; err != nil {
 		return nil, err
 	}
 	return &u, nil
 }
 
 func SaveUser(u *User) (int, error) {
-	err := core.MYSQL.Save(u).Error
+	err := core.SQLite.Save(u).Error
 	return u.ID, err
 }

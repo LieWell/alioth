@@ -12,7 +12,7 @@ var GlobalConfig YamlConfig
 type YamlConfig struct {
 	Server YamlServer `yaml:"server"`
 	Http   YamlHttp   `yaml:"http"`
-	Mysql  YamlMysql  `yaml:"mysql"`
+	Sqlite YamlSqlite `yaml:"sqlite"`
 	Zap    YamlZap    `yaml:"zap"`
 	JWT    YamlJWT    `yaml:"jwt"`
 }
@@ -28,14 +28,8 @@ type YamlHttp struct {
 	KeyFile   string `yaml:"keyFile"`
 }
 
-type YamlMysql struct {
-	Host               string `yaml:"host"`
-	Port               string `yaml:"port"`
-	Username           string `yaml:"username"`
-	Password           string `yaml:"password"`
-	Database           string `yaml:"database"`
-	MaxOpenConnections int    `yaml:"maxOpenConnections"`
-	MaxIdleConnections int    `yaml:"maxIdleConnections"`
+type YamlSqlite struct {
+	Path string `yaml:"path"`
 }
 
 type YamlZap struct {

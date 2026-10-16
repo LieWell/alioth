@@ -27,6 +27,7 @@ go.work.sum
 
 ##
 *.log
+*.db
 .vscode/
 ssl/
 config.yaml

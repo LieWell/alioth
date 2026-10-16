@@ -13,7 +13,7 @@ var (
 type Rplace struct {
 	ID   int            `gorm:"primaryKey;autoIncrement"`
 	Date string         `gorm:"type:date"` // 创建日期, 格式必须为: YYYY-MM-DD
-	Data datatypes.JSON `gorm:"type:json"` // 数据
+	Data datatypes.JSON // 数据,SQLite 存为 TEXT
 }
 
 func (u *Rplace) TableName() string {
@@ -22,13 +22,13 @@ func (u *Rplace) TableName() string {
 
 func FindRplaceByDate(dateNow string) (*Rplace, error) {
 	var r Rplace
-	if err := core.MYSQL.Where("date = ?", dateNow).First(&r).Error; err != nil {
+	if err := core.SQLite.Where("date = ?", dateNow).First(&r).Error; err != nil {
 		return nil, err
 	}
 	return &r, nil
 }
 
 func SaveRplace(r *Rplace) (int, error) {
-	err := core.MYSQL.Save(r).Error
+	err := core.SQLite.Save(r).Error
 	return r.ID, err
 }

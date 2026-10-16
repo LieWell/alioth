@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	"liewell.fun/alioth/core"
+	"liewell.fun/alioth/models"
 	"liewell.fun/alioth/web"
 )
 
@@ -26,7 +27,8 @@ func main() {
 	core.InitZap()
 
 	// 初始化数据库
-	core.InitMysql()
+	core.InitSqlite()
+	core.SQLite.AutoMigrate(&models.User{}, &models.Rplace{})
 
 	// 启动 web 服务
 	web.StartAndWait(ctx)
